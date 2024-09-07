@@ -1,0 +1,55 @@
+on:
+  workflow_call:
+
+jobs:
+  dep-build:
+    name: update-dependencies
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Start docker
+      run: docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb &
+    - name: Sleep 5 seconds
+      run: sleep 5s
+      shell: bash
+    - name: Setup dotnet ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+        source-url: https://nuget.pkg.github.com/ipjohnson-org/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: install dot lambda
+      run: dotnet tool install --global Amazon.Lambda.Tools
+    - name: install update tool
+      run: dotnet tool install --global dotnet-outdated-tool
+    - name: Install dependencies
+      run: dotnet-outdated -u -inc Hardened -inc FriendsWithRecipes
+    - name: restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build
+    - name: Test with the dotnet CLI
+      run: dotnet test
+    - name: install cdk
+      run: npm install -g aws-cdk
+    - name: build cdk app
+      working-directory: src/FriendsWithRecipes.Recipes.CdkDeployment/
+      run: cdk synth -c stage=dev -c region=useast
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.UPDATE_DEPENDENCY_PAT }}
+        commit-message: Update deps
+        signoff: false
+        title: 'Dependency update'
+        labels: |
+          auto-merge
+    - name: Enable Pull Request Automerge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: peter-evans/enable-pull-request-automerge@v3
+      with:
+        token: ${{ secrets.UPDATE_DEPENDENCY_PAT }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash  
