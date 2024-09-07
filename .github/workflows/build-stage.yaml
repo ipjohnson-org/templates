@@ -13,6 +13,7 @@ jobs:
     name: deploy-${{ inputs.stage }}-${{ inputs.region }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.stage }}-${{ inputs.region }}
+    concurrency: ${{ github.event.repository.name }}-${{ inputs.stage }}-${{ inputs.region }}
     steps:
     - uses: actions/checkout@v4
     - name: Start docker
