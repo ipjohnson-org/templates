@@ -9,7 +9,8 @@ on:
         type: string
  
 jobs:
-  reusable_workflow_job:
+  deploy_job:
+    name: deploy-${{ inputs.stage }}-${{ inputs.region }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.stage }}-${{ inputs.region }}
     steps:
