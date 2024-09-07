@@ -2,33 +2,15 @@ on:
   workflow_call:
         
 jobs:
-  reusable_workflow_job:
-    runs-on: ubuntu-latest
-    environment: gamma-useast
-    steps:
-    - uses: actions/checkout@v4
-    - name: Start docker
-      run: docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb &
-    - name: Sleep 5 seconds
-      run: sleep 5s
-      shell: bash
-    - name: Setup dotnet ${{ matrix.dotnet-version }}
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ matrix.dotnet-version }}
-        source-url: https://nuget.pkg.github.com/ipjohnson-org/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: install dot lambda
-      run: dotnet tool install --global Amazon.Lambda.Tools
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build
-    - name: Test with the dotnet CLI
-      run: dotnet test
-    - name: install cdk
-      run: npm install -g aws-cdk
-    - name: build cdk app
-      working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
-      run: cdk synth -c stage=dev -c region=useast
+  gamma-useast:
+    uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
+    with:
+      region: useast
+      stage: gamma
+  gamma-uswest:
+    uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
+    needs: gamma-useast
+    with:
+      region: uswest
+      stage: gamma      
+
