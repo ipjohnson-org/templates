@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: gamma-useast
     steps:
+    - name: ls
+      run: ls -la
     - name: build cdk app
       working-directory: src/${{ github.event.repository.name }}.Recipes.CdkDeployment/
       run: cdk synth -c stage=dev -c region=useast
