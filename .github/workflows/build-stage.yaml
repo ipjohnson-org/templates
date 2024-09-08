@@ -10,7 +10,7 @@ on:
  
 jobs:
   deploy_job:
-    name: deploy-${{ inputs.stage }}-${{ inputs.region }}
+    name: deploy
     runs-on: ubuntu-latest
     environment: ${{ inputs.stage }}-${{ inputs.region }}
     concurrency: ${{ github.event.repository.name }}-${{ inputs.stage }}-${{ inputs.region }}
