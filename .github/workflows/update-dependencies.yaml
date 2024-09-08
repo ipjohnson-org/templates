@@ -5,6 +5,9 @@ jobs:
   dep-build:
     name: update-dependencies
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.event.repository.name }} + '-update-dependencies'
+      cancel-in-progress: true    
     steps:
     - uses: actions/checkout@v4
     - name: Start docker
