@@ -34,7 +34,8 @@ jobs:
     - name: install cdk
       run: npm install -g aws-cdk
     - name: build cdk app
-      working-directory: src/FriendsWithRecipes.Recipes.CdkDeployment/
+      if: hashFiles('src/' + ${{ github.event.repository.name }} + '.CdkDeployment/' + ${{ github.event.repository.name }} + '.CdkDeployment.csproj') != ''
+      working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
       run: cdk synth -c stage=dev -c region=useast
     - name: Create Pull Request
       id: cpr
