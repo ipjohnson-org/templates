@@ -6,7 +6,9 @@ jobs:
     name: PR-${{ github.event.repository.name }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.stage }}-${{ inputs.region }}
-    concurrency: PR-${{ github.event.repository.name }}
+    concurrency: 
+      group: PR-${{ github.ref }}
+      cancel-in-progress: true
     steps:
     - uses: actions/checkout@v4
     - name: Start docker
