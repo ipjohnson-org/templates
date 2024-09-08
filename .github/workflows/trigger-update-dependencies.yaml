@@ -4,6 +4,9 @@ on:
 jobs:
   trigger-update:
     runs-on: ubuntu-latest
+    concurrency:
+      group: trigger-update-dependencies
+      cancel-in-progress: true
     strategy:
       matrix:
         repo: ['FriendsWithRecipes.Recipes', 'FriendsWithRecipes.IngredientIngest']
