@@ -1,5 +1,11 @@
 on:
   workflow_call:
+    inputs:
+      build_cdk:
+        type: boolean
+        description: 'Should build cdk app'
+        required: false
+        default: true
 
 jobs:
   dep-build:
@@ -37,7 +43,7 @@ jobs:
     - name: install cdk
       run: npm install -g aws-cdk
     - name: build cdk app
-      if: hashFiles('src/' + ${{ github.event.repository.name }} + '.CdkDeployment/' + ${{ github.event.repository.name }} + '.CdkDeployment.csproj') != ''
+      if: ${{ github.inputs.build_cdk }}
       working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
       run: cdk synth -c stage=dev -c region=useast
     - name: Create Pull Request
