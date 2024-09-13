@@ -6,13 +6,13 @@ jobs:
     name: gamma-useast
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
     with:
-      region: useast
+      region: us-east-1
       stage: gamma
   gamma-uswest:
     name: gamma-uswest
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
     needs: gamma-useast
     with:
-      region: uswest
+      region: us-west-2
       stage: gamma      
 
