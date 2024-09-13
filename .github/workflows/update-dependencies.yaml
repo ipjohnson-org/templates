@@ -45,7 +45,7 @@ jobs:
     - name: build cdk app
       if: ${{ github.inputs.build_cdk }}
       working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
-      run: cdk synth -c stage=dev -c region=useast
+      run: cdk synth -c stage=production -c region=us-east-1
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v7
