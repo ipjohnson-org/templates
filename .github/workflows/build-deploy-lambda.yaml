@@ -23,4 +23,4 @@ jobs:
     with:
       region: us-west-2
       stage: gamma
-      service_account: ${{ inputs.gamma_account }}
+      service_account_role: ${{ inputs.gamma_account }}
