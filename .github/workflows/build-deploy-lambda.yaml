@@ -17,7 +17,7 @@ jobs:
     with:
       region: us-east-1
       stage: gamma
-      service_account_role: ${{ inputs.gamma_account }}
+      service_account_role: ${{ inputs.gamma_account_role }}
   gamma-uswest:
     name: gamma-uswest
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
@@ -26,4 +26,4 @@ jobs:
     with:
       region: us-west-2
       stage: gamma
-      service_account_role: ${{ inputs.gamma_account }}
+      service_account_role: ${{ inputs.gamma_account_role }}
