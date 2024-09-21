@@ -46,4 +46,3 @@ jobs:
     - name: build cdk app
       working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
       run: cdk synth -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} --all
-      run: cdk synth -c stage=${{ inputs.stage }} -c region=${{ inputs.region }}
