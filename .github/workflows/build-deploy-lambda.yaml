@@ -16,6 +16,7 @@ jobs:
   gamma-useast:
     name: gamma-useast
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
+    secrets: inherit
     permissions:
       id-token: write
       contents: read
@@ -28,6 +29,7 @@ jobs:
     name: gamma-uswest
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
     needs: gamma-useast
+    secrets: inherit
     permissions:
       id-token: write
       contents: read
