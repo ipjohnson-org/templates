@@ -44,7 +44,6 @@ jobs:
     - name: Assume role using OIDC
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        audience: sts.amazonaws.com.cn
         role-to-assume: ${{ inputs.service_account_role }}
         aws-region: ${{ inputs.region }}    
     - name: install cdk
