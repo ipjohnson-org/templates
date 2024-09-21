@@ -7,11 +7,18 @@ on:
       prod_account_role:
         required: true
         type: string
+
+permissions:
+  id-token: write
+  contents: read
         
 jobs:
   gamma-useast:
     name: gamma-useast
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
+    permissions:
+      id-token: write
+      contents: read
     with:
       region: us-east-1
       stage: gamma
@@ -20,6 +27,9 @@ jobs:
     name: gamma-uswest
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
     needs: gamma-useast
+    permissions:
+      id-token: write
+      contents: read
     with:
       region: us-west-2
       stage: gamma
