@@ -7,6 +7,9 @@ on:
       stage:
         required: true
         type: string
+      service_account:
+        required: true
+        type: string
  
 jobs:
   deploy_job:
@@ -42,4 +45,5 @@ jobs:
       run: npm install -g aws-cdk
     - name: build cdk app
       working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
+      run: cdk synth -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} --all
       run: cdk synth -c stage=${{ inputs.stage }} -c region=${{ inputs.region }}
