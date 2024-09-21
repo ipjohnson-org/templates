@@ -7,7 +7,7 @@ on:
       stage:
         required: true
         type: string
-      service_account:
+      service_account_role:
         required: true
         type: string
  
@@ -41,6 +41,11 @@ jobs:
       run: dotnet build
     - name: Test with the dotnet CLI
       run: dotnet test
+    - name: Assume role using OIDC
+      uses: aws-actions/configure-aws-credentials@master
+      with:
+        role-to-assume: ${{ inputs.service_account_role }}
+        aws-region: ${{ inputs.region }}    
     - name: install cdk
       run: npm install -g aws-cdk
     - name: build cdk app
