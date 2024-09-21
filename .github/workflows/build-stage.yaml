@@ -50,4 +50,4 @@ jobs:
       run: npm install -g aws-cdk
     - name: build cdk app
       working-directory: src/${{ github.event.repository.name }}.CdkDeployment/
-      run: cdk deploy -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} --all
+      run: cdk deploy -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} --require-approval never --all
