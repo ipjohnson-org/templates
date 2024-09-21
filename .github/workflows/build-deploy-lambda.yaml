@@ -1,5 +1,12 @@
 on:
   workflow_call:
+    inputs:
+      gamma_account:
+        required: true
+        type: string
+      prod_account:
+        required: true
+        type: string
         
 jobs:
   gamma-useast:
@@ -8,11 +15,12 @@ jobs:
     with:
       region: us-east-1
       stage: gamma
+      service_account: ${{ inputs.gamma_account }}
   gamma-uswest:
     name: gamma-uswest
     uses: ipjohnson-org/templates/.github/workflows/build-stage.yaml@main
     needs: gamma-useast
     with:
       region: us-west-2
-      stage: gamma      
-
+      stage: gamma
+      service_account: ${{ inputs.gamma_account }}
