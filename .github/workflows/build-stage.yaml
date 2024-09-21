@@ -10,11 +10,6 @@ on:
       service_account_role:
         required: true
         type: string
-    
-permissions:
-  id-token: write
-  contents: read
-  packages: read
   
 jobs:
   deploy_job:
