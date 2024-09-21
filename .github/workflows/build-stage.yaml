@@ -47,7 +47,7 @@ jobs:
     - name: Test with the dotnet CLI
       run: dotnet test
     - name: Assume role using OIDC
-      uses: aws-actions/configure-aws-credentials@master
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ inputs.service_account_role }}
         aws-region: ${{ inputs.region }}    
