@@ -19,6 +19,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: read
     with:
       region: us-east-1
       stage: gamma
@@ -30,6 +31,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: read
     with:
       region: us-west-2
       stage: gamma
